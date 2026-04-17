@@ -5,7 +5,7 @@ from io import BytesIO
 # 1. Configuración de la página
 st.set_page_config(page_title="Generador de QR - ASEG", page_icon="📱")
 
-# 2. Inyección de CSS para centrado total y colores ASEG
+# 2. Inyección de CSS para colores ASEG
 estilo_css = """
 <style>
     /* Fondo de la página */
@@ -19,22 +19,7 @@ estilo_css = """
         text-align: center !important; 
     }
 
-    /* --- AJUSTE DE CENTRADO PARA QR, CAPTION Y BOTÓN --- */
-    /* Centra la imagen y el botón de descarga */
-    [data-testid="stImage"], [data-testid="stDownloadButton"] {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-    }
-
-    /* Centra específicamente el texto de la leyenda (caption) de la imagen */
-    [data-testid="stImageCaption"] {
-        text-align: center !important;
-        width: 100%;
-        display: block;
-    }
-
-    /* Estilo general de los botones */
+    /* Estilo general de los botones (Aplica al de Generar y Descargar) */
     .stButton > button, .stDownloadButton > button {
         background-color: #FF5E12 !important; /* Naranja Intenso */
         border-radius: 8px;
@@ -42,12 +27,11 @@ estilo_css = """
         padding: 10px 24px;
         font-weight: bold;
         transition: 0.3s;
-        display: block;
-        margin: 0 auto; /* Centrado extra para el botón */
     }
 
     /* Forzar color BLANCO en el texto de los botones */
-    .stButton > button p, .stDownloadButton > button p {
+    .stButton > button p, .stButton > button span, 
+    .stDownloadButton > button p, .stDownloadButton > button span {
         color: white !important;
     }
     
@@ -65,12 +49,18 @@ estilo_css = """
         border-radius: 5px;
         text-align: center;
     }
+    
+    /* Centrar específicamente el texto de la leyenda (caption) de la imagen */
+    [data-testid="stImageCaption"] {
+        text-align: center !important;
+        width: 100%;
+    }
 </style>
 """
 st.markdown(estilo_css, unsafe_allow_html=True)
 
-# 3. Interfaz de usuario
-st.title("Generador de Códigos QR Institucional")
+# 3. Interfaz de usuario (Título corregido)
+st.title("Generador de Códigos QR")
 st.write("Ingresa el enlace o texto que deseas convertir en un código QR:")
 
 # Variable de entrada
@@ -100,15 +90,20 @@ if boton_generar:
         img.save(buf, format="PNG")
         byte_im = buf.getvalue()
 
-        # Mostrar imagen centrada con leyenda centrada
-        st.image(byte_im, caption="Tu código QR generado")
+        # 5. USO DE COLUMNAS PARA CENTRAR LA IMAGEN Y EL BOTÓN DE DESCARGA
+        col_img1, col_img2, col_img3 = st.columns([1, 2, 1])
         
-        # Botón de descarga centrado
-        st.download_button(
-            label="Descargar QR",
-            data=byte_im,
-            file_name="codigo_qr_aseg.png",
-            mime="image/png"
-        )
+        with col_img2:
+            # Mostrar imagen centrada
+            st.image(byte_im, caption="Tu código QR generado", use_container_width=True)
+            
+            # Botón de descarga centrado
+            st.download_button(
+                label="Descargar QR",
+                data=byte_im,
+                file_name="codigo_qr_aseg.png",
+                mime="image/png",
+                use_container_width=True
+            )
     else:
         st.warning("Por favor, ingresa un texto o enlace primero.")
