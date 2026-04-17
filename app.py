@@ -5,7 +5,7 @@ from io import BytesIO
 # 1. Configuración de la página
 st.set_page_config(page_title="Generador de QR - ASEG", page_icon="📱")
 
-# 2. Inyección de CSS para los colores institucionales de ASEG
+# 2. Inyección de CSS para los colores institucionales y centrado
 estilo_css = """
 <style>
     /* Fondo de la página */
@@ -13,9 +13,16 @@ estilo_css = """
         background-color: #f4f4f9; 
     }
     
-    /* Color de los textos generales y títulos */
+    /* Centrar textos generales y aplicar color Azul Marino */
     h1, h2, h3, p, label {
-        color: #00304F !important; /* Azul Marino */
+        color: #00304F !important; 
+        text-align: center !important; 
+    }
+
+    /* Centrar la imagen generada y los botones en la pantalla */
+    div[data-testid="stImage"], div[data-testid="stButton"], div[data-testid="stDownloadButton"] {
+        display: flex;
+        justify-content: center;
     }
 
     /* Estilo del botón */
@@ -36,12 +43,13 @@ estilo_css = """
         border-color: #00304F !important;
     }
 
-    /* Estilo de la caja de texto */
+    /* Estilo de la caja de texto y centrado de su contenido */
     .stTextInput > div > div > input {
         background-color: #D6D6D6; /* Gris Claro de fondo */
         color: #362D32; /* Gris Oscuro para texto */
         border: 2px solid #00304F;
         border-radius: 5px;
+        text-align: center; /* Centra el texto que el usuario escribe */
     }
 </style>
 """
@@ -67,9 +75,8 @@ if st.button("Generar QR"):
         qr.add_data(texto_usuario)
         qr.make(fit=True)
 
-        # Crear la imagen usando los colores de la institución
-        # El QR será Azul Marino y el fondo Gris Claro
-        img = qr.make_image(fill_color="#00304F", back_color="#D6D6D6")
+        # Crear la imagen: AHORA ES NEGRO CON FONDO BLANCO
+        img = qr.make_image(fill_color="black", back_color="white")
 
         # Guardar la imagen en la memoria para mostrarla en Streamlit
         buf = BytesIO()
