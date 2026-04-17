@@ -35,7 +35,10 @@ estilo_css = """
         font-weight: bold;
         transition: 0.3s;
     }
-    
+    /* --- NUEVA REGLA: Forzar color BLANCO en el texto del botón --- */
+    .stButton > button p, .stButton > button div, .stButton > button span {
+        color: white !important;
+    }
     /* Efecto al pasar el mouse por el botón (Hover) */
     .stButton > button:hover {
         background-color: #57A0D4 !important; /* Azul Hover */
@@ -56,7 +59,7 @@ estilo_css = """
 st.markdown(estilo_css, unsafe_allow_html=True)
 
 # 3. Interfaz de usuario
-st.title("Generador de Códigos QR Institucional")
+st.title("Generador de Códigos QR")
 st.write("Ingresa el enlace o texto que deseas convertir en un código QR:")
 
 # Variable de entrada para el usuario
