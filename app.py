@@ -19,8 +19,8 @@ estilo_css = """
         text-align: center !important; 
     }
 
-    /* Estilo general de los botones (Aplica al de Generar y Descargar) */
-    .stButton > button, .stDownloadButton > button {
+    /* Estilo exclusivo del botón de Generar (Naranja) */
+    .stButton > button {
         background-color: #FF5E12 !important; /* Naranja Intenso */
         border-radius: 8px;
         border: none;
@@ -29,15 +29,31 @@ estilo_css = """
         transition: 0.3s;
     }
 
-    /* Forzar color BLANCO en el texto de los botones */
+    /* Estilo exclusivo del botón de Descargar (Gris) */
+    .stDownloadButton > button {
+        background-color: #6C757D !important; /* Gris */
+        border-radius: 8px;
+        border: none;
+        padding: 10px 24px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    /* Forzar color BLANCO en el texto de ambos botones */
     .stButton > button p, .stButton > button span, 
     .stDownloadButton > button p, .stDownloadButton > button span {
         color: white !important;
     }
     
-    /* Efecto al pasar el mouse por el botón (Hover) */
-    .stButton > button:hover, .stDownloadButton > button:hover {
+    /* Efecto al pasar el mouse por el botón de Generar (Hover) */
+    .stButton > button:hover {
         background-color: #57A0D4 !important; /* Azul Hover */
+        color: white !important;
+    }
+
+    /* Efecto al pasar el mouse por el botón de Descargar (Hover) */
+    .stDownloadButton > button:hover {
+        background-color: #5A6268 !important; /* Gris un poco más oscuro */
         color: white !important;
     }
 
@@ -59,7 +75,7 @@ estilo_css = """
 """
 st.markdown(estilo_css, unsafe_allow_html=True)
 
-# 3. Interfaz de usuario (Título corregido)
+# 3. Interfaz de usuario
 st.title("Generador de Códigos QR")
 st.write("Ingresa el enlace o texto que deseas convertir en un código QR:")
 
