@@ -5,7 +5,7 @@ from io import BytesIO
 # 1. Configuración de la página
 st.set_page_config(page_title="Generador de QR - ASEG", page_icon="📱")
 
-# 2. Inyección de CSS para los colores institucionales y centrado
+# 2. Inyección de CSS para los colores institucionales
 estilo_css = """
 <style>
     /* Fondo de la página */
@@ -19,8 +19,8 @@ estilo_css = """
         text-align: center !important; 
     }
 
-    /* Centrar la imagen generada y los botones en la pantalla */
-    div[data-testid="stImage"], div[data-testid="stButton"], div[data-testid="stDownloadButton"] {
+    /* Centrar la imagen generada y el botón de descarga en la pantalla */
+    div[data-testid="stImage"], div[data-testid="stDownloadButton"] {
         display: flex;
         justify-content: center;
     }
@@ -49,7 +49,7 @@ estilo_css = """
         color: #362D32; /* Gris Oscuro para texto */
         border: 2px solid #00304F;
         border-radius: 5px;
-        text-align: center; /* Centra el texto que el usuario escribe */
+        text-align: center;
     }
 </style>
 """
@@ -62,8 +62,15 @@ st.write("Ingresa el enlace o texto que deseas convertir en un código QR:")
 # Variable de entrada para el usuario
 texto_usuario = st.text_input("Enlace o texto:")
 
-# Botón para generar
-if st.button("Generar QR"):
+# 4. Uso de columnas para centrar exclusivamente el botón de generar
+col1, col2, col3 = st.columns([1, 2, 1])
+
+with col2:
+    # Creamos el botón dentro de la columna central
+    boton_generar = st.button("Generar QR", use_container_width=True)
+
+# Lógica si se presiona el botón
+if boton_generar:
     if texto_usuario:
         # Lógica para crear el código QR
         qr = qrcode.QRCode(
@@ -75,7 +82,7 @@ if st.button("Generar QR"):
         qr.add_data(texto_usuario)
         qr.make(fit=True)
 
-        # Crear la imagen: AHORA ES NEGRO CON FONDO BLANCO
+        # Crear la imagen: negro con fondo blanco
         img = qr.make_image(fill_color="black", back_color="white")
 
         # Guardar la imagen en la memoria para mostrarla en Streamlit
