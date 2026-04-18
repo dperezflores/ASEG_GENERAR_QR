@@ -8,6 +8,10 @@ st.set_page_config(page_title="Generador de QR - ASEG", page_icon="📱")
 # 2. Inyección de CSS para colores ASEG
 estilo_css = """
 <style>
+    /* --- NUEVO: Ocultar menú superior (GitHub, Share) y pie de página --- */
+    header {visibility: hidden;}
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
     /* Fondo de la página */
     .stApp {
         background-color: #f4f4f9; 
